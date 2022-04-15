@@ -639,12 +639,14 @@ plt.savefig('sns.png')
 
 It appears that some stations in Antartica have seen significant increases in temperature. Still, most dots fall witin +-0.25 degrees per year.
 
-### Next, let's look at a comparison between two countries with distinct climates, and see if they differ. We will answer the question: does climate change affect Egypt and Iceland differently?
+### For the last plot, I want to look at the yearly change in temperature of the same country across different times of the year. Does climate change affect summer and winter differently?
+
+Let's look at India. We'll look at January, June, and September to get a comprehensive coverage of the year.
 
 
 ```python
 #First, let's define a new function to select the data.
-def query_climate_database_comp(country1, country2, year_begin, year_end, month):
+def query_climate_database_month(country, year_begin, year_end, month1, month2, month3):
     """
     A function that takes four arguments and returns a Pandas dataframe by making a query
     """
@@ -655,8 +657,8 @@ def query_climate_database_comp(country1, country2, year_begin, year_end, month)
             FROM temperatures T \
             LEFT JOIN stations S ON T.id = S.id\
             LEFT JOIN countries C ON C.code = SUBSTRING(T.id, 1, 2)\
-            WHERE C.Name='{country1}' OR C.Name='{country2}' AND T.year >= {year_begin} \
-            AND T.year<={year_end} AND T.month = {month}"
+            WHERE C.Name='{country}' AND T.year >= {year_begin} \
+            AND T.year<={year_end} AND T.month = {month1} OR T.month = {month2} OR T.month = {month3} "
     
     #converts to Pandas dataframe
     df = pd.read_sql_query(cmd, conn)
@@ -666,7 +668,7 @@ def query_climate_database_comp(country1, country2, year_begin, year_end, month)
 
 
 ```python
-def temperature_coefficient_plot_comp(country1, country2, year_begin, year_end, month, min_obs, **kwargs):
+def temperature_coefficient_plot_month(country, year_begin, year_end, month1, month2, month3, min_obs, **kwargs):
     """
     This function takes in countries, year_begin, year_end, and month, as the previous sql function does. It also
     takes in a minimum observation argument, which dictates the minimum amount of observation for any station's 
@@ -674,24 +676,23 @@ def temperature_coefficient_plot_comp(country1, country2, year_begin, year_end, 
     style the plot. 
     """
     #call the query function to get the dataframe
-    df = query_climate_database_comp(country1, country2, year_begin, year_end, month)
+    df = query_climate_database_month(country, year_begin, year_end, month1, month2, month3)
     
     #filters out any station not meeting the min_obs requirement
-    df['len'] = df.groupby(["NAME"])["Temp"].transform(len)
+    df['len'] = df.groupby(["NAME", "Month"])["Temp"].transform(len)
     #print(df.head())
     df = df[df['len'] >= min_obs]
     
     #adds esitmated yearly increase column using our coef function
-    coefs = df.groupby(["NAME", "LATITUDE", "LONGITUDE", "Name"]).apply(coef)
+    coefs = df.groupby(["NAME", "LATITUDE", "LONGITUDE", "Month"]).apply(coef)
     coefs = coefs.reset_index()
     #print(coefs.head())
     coefs.rename(columns = {0:'Estimated Yearly Increase (°C)', "Name":"Country"}, inplace = True)
     
     #plots the data
-    fig = px.scatter(data_frame=coefs, # data for the points you want to plot
-                        x = "NAME", # column name for latitude informataion
+    fig = px.box(data_frame=coefs, # data for the points you want to plot
                         y = "Estimated Yearly Increase (°C)", # column name for longitude information
-                        facet_row = "Country",
+                        facet_col = "Month",
                         **kwargs) # map style
     return fig
 ```
@@ -699,17 +700,18 @@ def temperature_coefficient_plot_comp(country1, country2, year_begin, year_end, 
 
 ```python
 #call our function
-fig = temperature_coefficient_plot_comp("Iceland", "Egypt", 1990, 2020, 1, 10, 
-                                   title = "Estimates of Yearly Increase in Temperature in January for Stations in Egypt vs Iceland, years 1990 - 2020",
+from plotly.io import write_html
+fig = temperature_coefficient_plot_month("India", 1990, 2020, 1, 6, 9, 10, 
+                                   title = "Estimates of Yearly Increase in Temperature in January, June, and September for Stations in India, years 1990 - 2020",
                                    width = 1000,
                                    height = 600)
 
 fig.show()
-write_html(fig, "scatter.html")
+write_html(fig, "month.html")
 ```
 
-{% include scatter.html %}
+{% include month.html %}
 
 
 
-It appears that there is no significant difference in the yearly change in temperature, despite the different geography of Egypt and Iceland.
+As the box plot shows, there is a negligible difference in how climate change affects different seasons, disregarding outliers. All three months appear to be centered around zero, while January shows less variance in temperature readings. This could be related to India's specific climate. 
