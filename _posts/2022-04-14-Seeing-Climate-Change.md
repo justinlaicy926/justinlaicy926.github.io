@@ -625,7 +625,7 @@ y = "Station Name"
 #call our function with predetermined parameters
 plot_antartica(df, title, x, y)
 
-<img src="output_29_0.png" >
+![sns.png](/images/sns.png)
 
     
 
