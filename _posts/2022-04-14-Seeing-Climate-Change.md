@@ -624,6 +624,9 @@ y = "Station Name"
 
 #call our function with predetermined parameters
 plot_antartica(df, title, x, y)
+
+#saves our plot
+plt.savefig('sns.png')
 ```
 
 
