@@ -622,7 +622,7 @@ fig.show()
 write_html(fig, "antartica.html")
 ```
 
-{% include Antartica.html %}
+{% include antartica.html %}
 
 
 
