@@ -589,55 +589,44 @@ def query_climate_database_2(year_begin, year_end, lat):
 
 
 ```python
-#gets the data from our database
-df = query_climate_database_2(1960, 2020, -80)
-```
-
-
-```python
-import seaborn as sns
-from matplotlib import pyplot as plt
-
-def plot_antartica(df, _title, _x_label, _y_label):
+def plot_antartica(year_begin, year_end, lat, **kwargs):
     #use the same coefs function to determine the avearge yearly change
+    df = query_climate_database_2(year_begin, year_end, lat)
     coefs = df.groupby(["NAME", "Month"]).apply(coef)
+    #coefs.rename(columns = {0:'Estimated Yearly Increase (°C)'}, inplace = True)
     coefs = coefs.reset_index()
 
     #plot the data points
-    sns.relplot(data = coefs, 
+    fig = px.scatter(data_frame = coefs, 
                 x = 0, 
                 y = "NAME",
-                alpha = 0.5, 
-                height = 4,
-                aspect = 1.7)
-    plt.plot([0,0], [0,12], color = "lightgray", zorder = 0)
-    labs = plt.gca().set(xlabel = _x_label,
-                         ylabel = _y_label,
-                         title = _title)
+                **kwargs
+          )
+    return fig
 ```
 
 
 ```python
-title = "Average Yearly Change in Temperature\nat Antarctic Climate Stations\n(Each dot is one month of the year)"
-x = "Regression Coefficient"
-y = "Station Name"
-
+from plotly.io import write_html
 #call our function with predetermined parameters
-plot_antartica(df, title, x, y)
+fig = plot_antartica(1980, 2020, -80, 
+                     title = "Average Yearly Change in Temperature\nat Antarctic Climate Stations\n(Each dot is one month of the year)",
+                     labels={
+                     "NAME": "STATION NAME",
+                     "0": "Average Yearly Change in Temperature",
+                 },
+                    )
+fig.show()
 
 #saves our plot
-plt.savefig('sns.png')
+write_html(fig, "antartica.html")
 ```
 
-
-
-![sns.png](/images/sns.png)
-
-    
+{% include Antartica.html %}
 
 
 
-It appears that some stations in Antartica have seen significant increases in temperature. Still, most dots fall witin +-0.25 degrees per year.
+It appears that some stations in Antartica have seen significant increases in temperature. Still, most dots fall witin +-0.25 degrees per year, except one significant outlier in the Brianna station, which should be disregarded.
 
 ### For the last plot, I want to look at the yearly change in temperature of the same country across different times of the year. Does climate change affect summer and winter differently?
 
