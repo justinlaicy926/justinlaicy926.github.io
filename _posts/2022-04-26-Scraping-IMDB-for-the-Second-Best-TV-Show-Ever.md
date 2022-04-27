@@ -3,12 +3,6 @@ layout: post
 title: Scraping IMDB for the Second Best TV Show Ever
 ---
 
-
----
-layout: post
-title: Scraping IMDB for the Second Best TV Show Ever
----
-
 ## Web Scraping IMDB
 It is common knowledge that *The Wire* by David Simon is the best TV show ever in existence, which begs the question: what comes second? In this blog post, I'll demonstrate how to find similar shows on IMDB using web scraping. 
 
