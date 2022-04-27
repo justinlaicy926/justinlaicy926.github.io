@@ -4,6 +4,11 @@ title: Scraping IMDB for the Second Best TV Show Ever
 ---
 
 
+---
+layout: post
+title: Scraping IMDB for the Second Best TV Show Ever
+---
+
 ## Web Scraping IMDB
 It is common knowledge that *The Wire* by David Simon is the best TV show ever in existence, which begs the question: what comes second? In this blog post, I'll demonstrate how to find similar shows on IMDB using web scraping. 
 
@@ -84,7 +89,7 @@ def parse_actor_page(self, response):
         actor_name = response.css("span.itemprop::text").get()
 
         #selects the work from the actor page
-        movie_or_TV_name = response.css("div.filmo-category-section:not([style*='display:none;']) b")
+        movie_or_TV_name = response.css("div.filmo-row b")
         for movie in movie_or_TV_name:
             yield {"actor" : actor_name, "movie_or_TV_name" : movie.css("a::text").get()}
 ```
@@ -103,7 +108,6 @@ We now have a CSV file with over 1000 entries. Let's now perfrom data analysis t
 
 ```python
 import pandas as pd
-import numpy as np
 ```
 
 
@@ -112,7 +116,7 @@ import numpy as np
 df = pd.read_csv("results.csv")
 
 #inspect our dataframe
-df.head()
+df
 ```
 
 
@@ -143,31 +147,62 @@ df.head()
   <tbody>
     <tr>
       <th>0</th>
-      <td>Lawrence Gilliard Jr.</td>
-      <td>Heart of a Lion</td>
+      <td>Thuliso Dingwall</td>
+      <td>The Mechanics Rose</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Lawrence Gilliard Jr.</td>
-      <td>Pep</td>
+      <td>Thuliso Dingwall</td>
+      <td>Person of Interest</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Lawrence Gilliard Jr.</td>
-      <td>St. Sebastian</td>
+      <td>Thuliso Dingwall</td>
+      <td>Unforgettable</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Lawrence Gilliard Jr.</td>
-      <td>Power Book III: Raising Kanan</td>
+      <td>Thuliso Dingwall</td>
+      <td>Ex$pendable</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Lawrence Gilliard Jr.</td>
-      <td>That Damn Michael Che</td>
+      <td>Thuliso Dingwall</td>
+      <td>Toe to Toe</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>18313</th>
+      <td>Lance Reddick</td>
+      <td>Great Expectations</td>
+    </tr>
+    <tr>
+      <th>18314</th>
+      <td>Lance Reddick</td>
+      <td>What the Deaf Man Heard</td>
+    </tr>
+    <tr>
+      <th>18315</th>
+      <td>Lance Reddick</td>
+      <td>The Nanny</td>
+    </tr>
+    <tr>
+      <th>18316</th>
+      <td>Lance Reddick</td>
+      <td>Swift Justice</td>
+    </tr>
+    <tr>
+      <th>18317</th>
+      <td>Lance Reddick</td>
+      <td>New York Undercover</td>
     </tr>
   </tbody>
 </table>
+<p>18318 rows × 2 columns</p>
 </div>
 
 
@@ -210,23 +245,23 @@ df.head()
   </thead>
   <tbody>
     <tr>
-      <th>100 Centre Street</th>
+      <th>#BlackGirlhood</th>
       <td>1</td>
     </tr>
     <tr>
-      <th>12 Monkeys</th>
+      <th>#Like</th>
       <td>1</td>
     </tr>
     <tr>
-      <th>1st &amp; Ten</th>
+      <th>#Lucky Number</th>
       <td>1</td>
     </tr>
     <tr>
-      <th>28 Days</th>
+      <th>#MoreLife</th>
       <td>1</td>
     </tr>
     <tr>
-      <th>3 Blind Mice</th>
+      <th>#PrettyPeopleProblems</th>
       <td>1</td>
     </tr>
   </tbody>
@@ -272,23 +307,23 @@ df.head()
   <tbody>
     <tr>
       <th>The Wire</th>
-      <td>32</td>
+      <td>758</td>
     </tr>
     <tr>
       <th>Homicide: Life on the Street</th>
-      <td>6</td>
+      <td>120</td>
+    </tr>
+    <tr>
+      <th>Law &amp; Order</th>
+      <td>104</td>
     </tr>
     <tr>
       <th>Law &amp; Order: Special Victims Unit</th>
-      <td>6</td>
+      <td>102</td>
     </tr>
     <tr>
-      <th>After Once Upon a Time</th>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>ER</th>
-      <td>5</td>
+      <th>Veep</th>
+      <td>74</td>
     </tr>
   </tbody>
 </table>
@@ -298,9 +333,9 @@ df.head()
 
 Unsurprisingly, *The Wire* itself shares the most amount of actors with *The Wire*. We'll be focusing on the runner-ups. 
 
-There appears to be a tie among *Homicide: Life on the Street*, *Law & Order: Special Victims Unit*, and *After Once Upon a Time*. And at least two of them are also of the same genre.
+There appears to be a tie among *Homicide: Life on the Street*, *Law & Order*, and *Law & Order: Special Victims Unit*. All of them are of the same genre.
 
-Here is an visualization of the shared actor scenarios with *The Wire*. Notice how most shows on the plot share very few actors with *The Wire*. It is an indication of David Simon's choice of cast members: he prefers actors that organically resemble their roles to big-name household stars. He worked with people having little or no acting experience but an actual background on the Baltimore streets. 
+Here is an visualization of the shared actor scenarios with *The Wire*. Notice how most shows on the plot share very few actors with *The Wire*. It is an indication of David Simon's choice of cast members: he prefers actors that organically resemble their roles to big-names. He worked with people having little or no acting experience but an actual background on the Baltimore streets. 
 
 
 ```python
@@ -324,8 +359,7 @@ write_html(fig, "box.html")
 
 
 
-Again, this shows how special *The Wire* really is. No movie or TV ever comes close to its execellence.
-
+This is a fairly extreme distribution, with most shows having little resemblence. Again, this shows how special *The Wire* really is. No movie or TV ever comes close to its execellence.
 
 ```python
 
