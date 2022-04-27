@@ -327,6 +327,4 @@ write_html(fig, "box.html")
 Again, this shows how special *The Wire* really is. No movie or TV ever comes close to its execellence.
 
 
-```python
 
-```
