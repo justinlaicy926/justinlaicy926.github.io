@@ -361,6 +361,4 @@ write_html(fig, "box.html")
 
 This is a fairly extreme distribution, with most shows having little resemblence. Again, this shows how special *The Wire* really is. No movie or TV ever comes close to its execellence.
 
-```python
 
-```
