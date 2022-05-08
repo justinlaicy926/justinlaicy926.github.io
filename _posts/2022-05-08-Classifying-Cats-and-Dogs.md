@@ -5,7 +5,7 @@ title: Classifying Cats and Dogs using CNN
 
 ## Introduction
 
-In this blog post, we will make a Image Classification model to tell cats apart from dogs. We will be using the Tensorflow library for model construction and training
+In this blog post, we will make a Image Classification model using CNN, convolutional neural networks, to tell cats apart from dogs. We will be using the Tensorflow library for model construction and training
 
 
 ```python
