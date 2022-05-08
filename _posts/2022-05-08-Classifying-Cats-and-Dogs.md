@@ -3,8 +3,6 @@ layout: post
 title: Classifying Cats and Dogs using CNN
 ---
 
-## Introduction
-
 In this blog post, we will make a Image Classification model to tell cats apart from dogs. We will be using the Tensorflow library for model construction and training
 
 
@@ -80,25 +78,29 @@ Now, let's look at our cat and dog images for training.
 ```python
 import matplotlib.pyplot as plt
 
-class_names = train_dataset.class_names
+def plot_cats_and_dogs(ds):
+"""
+A function that takes in a data set and plots images separated by class
+"""
+  class_names = ds.class_names
 
-#plots the images from our dataset
-plt.figure(figsize=(15, 10))
-for images, labels in train_dataset.take(1):
-  cat = images[labels==0]
-  dog = images[labels==1]
-  for i in range(6):
-      ax = plt.subplot(2, 3, i + 1)
-      if i <=2:
-        plt.imshow(cat[i].numpy().astype("uint8"))
-        plt.title(class_names[labels[i]])
-        plt.axis("off")
-      else:
-        plt.imshow(dog[i].numpy().astype("uint8"))
-        plt.title(class_names[labels[i]])
-        plt.axis("off")
-    
-
+  #plots the images from our dataset
+  plt.figure(figsize=(15, 10))
+  for images, labels in ds.take(1):
+    cat = images[labels==0]
+    dog = images[labels==1]
+    for i in range(6):
+        ax = plt.subplot(2, 3, i + 1)
+        if i <=2:
+          plt.imshow(cat[i].numpy().astype("uint8"))
+          plt.title(class_names[labels[i]])
+          plt.axis("off")
+        else:
+          plt.imshow(dog[i].numpy().astype("uint8"))
+          plt.title(class_names[labels[i]])
+          plt.axis("off")
+  
+plot_cats_and_dogs(train_dataset)
 
 ```
 
