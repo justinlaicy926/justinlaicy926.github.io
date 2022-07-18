@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Full-Stack Web Development with Flask - A Tutorial
+title: Full Stack Web Development with Flask - A Tutorial
 ---
 
 In this blog post, we will create a simple message bank web app with Flask. 
