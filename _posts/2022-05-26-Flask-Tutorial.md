@@ -24,18 +24,20 @@ def main():
 
 The above instructions tell Flask to render the "main.html" file on our main page, which we will create next. Before that, we will have to create a "base.html", which will allow us to keep a consistent format throughout our web app.
 
-![base.PNG]({{ site.baseurl }}/images/base.png)
 
-![Capture.PNG]({{ site.baseurl }}/images/Capture.png)
+![base.PNG]({{ site.baseurl }}/images/base.PNG)
+
+![Capture.PNG]({{ site.baseurl }}/images/Capture.PNG)
+
 This is what "base.html" gives us. Pretty neat.
 
 Next, we will implement our main page by extending our "base.html" file. This way our web app will have a consistent theme throughout. These html code will create a welcome message on our main page. 
 
-![main.PNG]({{ site.baseurl }}/images/main.png)
+![main.PNG]({{ site.baseurl }}/images/main.PNG)
 
 With the html code ready, our "app.py" can successfully render our main page. Here is what it looks like. 
 
-![Capture2.PNG]({{ site.baseurl }}/images/Capture2.png)
+![Capture2.PNG]({{ site.baseurl }}/images/Capture2.PNG)
 
 Similarly, we can implement the two other pages, submit and view messages, with the following code.
 
@@ -194,9 +196,9 @@ html {
 
 Here is the resulting page.
 
-![submit.PNG]({{ site.baseurl }}/images/submit.png)
+![submit.PNG]({{ site.baseurl }}/images/submit.PNG)
 
-![view.PNG]({{ site.baseurl }}/images/view.png)
+![view.PNG]({{ site.baseurl }}/images/view.PNG)
 
 Now all we need to do is to publish our web app online so other people can play with it. We will be using a service called Heroku. Here is a tutorial. https://devcenter.heroku.com/articles/getting-started-with-python
 
