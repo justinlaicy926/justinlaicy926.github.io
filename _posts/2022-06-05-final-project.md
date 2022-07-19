@@ -424,7 +424,7 @@ write_html(fig, "prediction1.html")
     /usr/local/lib/python3.7/dist-packages/ipykernel_launcher.py:3: UserWarning: `Model.predict_generator` is deprecated and will be removed in a future version. Please use `Model.predict`, which supports generators.
       This is separate from the ipykernel package so we can avoid doing imports until
     
-![png]({{ site.baseurl }}/images/prediction_1.png)
+![png]({{ site.baseurl }}/images/prediction_1.PNG)
 
 Our model is looking extremely promising. Our model has managed to accurately predict every major turning points in the stock market. If this is real, we would all be billionairs. But is there a catch? It almost looks too good to be true. Let's see how it performs in the real world.
 
@@ -492,7 +492,7 @@ layout = go.Layout(
 fig = go.Figure(data=[trace1, trace2], layout=layout)
 ```
 
-![png]({{ site.baseurl }}/images/prediction_2.png)
+![png]({{ site.baseurl }}/images/prediction_2.PNG)
 
 With just two months of prediction, we are seeing a significant deviation from the actual price trend. Our model tells us that SP500 will continue tanking for two months, with no significant pullbacks. This is highly unlikely based on experience. The actual price trend, however, is much more reasonable.
 
