@@ -11,4 +11,4 @@ My interests include finance, cars, lifting, and outdoors.
 
 ### Contact me
 
-[justinlaicy926@gmail.com](mailto:justinlaicy926@gmail.com
+[justinlaicy926@gmail.com](mailto:justinlaicy926@gmail.com)
